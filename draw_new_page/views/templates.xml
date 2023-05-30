@@ -2,7 +2,7 @@
 <odoo>
     <template id="assets_backend" inherit_id="web.assets_backend" name="Backend Assets">
         <xpath expr="." position="inside">
-            <script type="text/javascript" src="/zhuangxiu/static/src/js/new_page.js"/>
+            <script type="text/javascript" src="/draw_new_page/static/src/js/new_page.js"/>
         </xpath>
     </template>
 </odoo>
