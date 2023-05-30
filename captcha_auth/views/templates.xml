@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="captcha_web_login" inherit_id="web.login">
+        <xpath expr="//div[hasclass('field-password')]" position="after">
+            <div class="form-group login-captcha field-login">
+                <label for="captcha">验证码</label>
+                <input type="text" placeholder="验证码" name="captcha" id="captcha"
+                       t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required"
+                       autocomplete="current-password" t-att-autofocus="'autofocus' if login else None"
+                       maxlength="4096"/>
+                <img id="captcha_image" class="captcha_image" src="#"/>
+            </div>
+            <script type="text/javascript">
+                odoo.define('captcha_auth.CaptchaCode', function(require){
+                    "use strict";
+                    var ajax = require('web.ajax');
+                    function get_captcha_path(){
+                        ajax.jsonRpc('/captcha_auth/get_captcha_path', 'call', {}).then(function(result) {
+                            self.$('#captcha_image').attr('src', window.location.origin+'/'+result['img_path']);
+                        });
+                    };
+                    get_captcha_path();
+                    self.$('#captcha_image').click(get_captcha_path);
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>
